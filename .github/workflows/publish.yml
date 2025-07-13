@@ -16,8 +16,8 @@ jobs:
       - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
 
       - name: 安装 pnpm
         uses: pnpm/action-setup@v2
@@ -31,6 +31,6 @@ jobs:
         run: pnpm build
 
       - name: 发布到 npm
-        run: pnpm publish --access public
+        run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
