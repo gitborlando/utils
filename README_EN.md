@@ -7,7 +7,7 @@ JavaScript/TypeScript utility collection
 ## Installation
 
 ```bash
-npm install @gitborlando-owner/g-util
+npm install @gitborlando/utils
 ```
 
 ## 🔧 Array Utils
@@ -20,7 +20,7 @@ import {
   lastOne,
   stableIndex,
   createArray,
-} from "@gitborlando-owner/g-util";
+} from "@gitborlando/utils";
 
 // Get first element (supports Array and Set)
 firstOne([1, 2, 3]); // 1
@@ -46,7 +46,7 @@ createArray(3); // [0, 1, 2]
 ### Advanced Iteration
 
 ```typescript
-import { loopFor, reverseFor, reverse } from "@gitborlando-owner/g-util";
+import { loopFor, reverseFor, reverse } from "@gitborlando/utils";
 
 // Loop through array (access current, next, previous elements)
 const arr = ["A", "B", "C"];
@@ -70,7 +70,7 @@ console.log(original); // [1, 2, 3] (original unchanged)
 ### Function Batch Processing
 
 ```typescript
-import { flushFuncs } from "@gitborlando-owner/g-util";
+import { flushFuncs } from "@gitborlando/utils";
 
 // Execute functions in batch and clear container
 const callbacks = [
@@ -95,7 +95,7 @@ flushFuncs(callbackSet); // Execute and clear Set
 ### Map Cache
 
 ```typescript
-import { createCache } from "@gitborlando-owner/g-util";
+import { createCache } from "@gitborlando/utils";
 
 const cache = createCache<string, number>();
 
@@ -132,7 +132,7 @@ cache.entries(); // IterableIterator<[string, number]>
 ### Object Cache
 
 ```typescript
-import { createObjCache } from "@gitborlando-owner/g-util";
+import { createObjCache } from "@gitborlando/utils";
 
 const objCache = createObjCache<string>();
 
@@ -156,7 +156,7 @@ const obj = objCache.toObject(); // { name: 'John', age: '30', role: 'admin' }
 ### Delete Operations
 
 ```typescript
-import { Delete } from "@gitborlando-owner/g-util";
+import { Delete } from "@gitborlando/utils";
 
 // Delete object property
 const obj = { a: 1, b: 2, c: 3 };
@@ -178,7 +178,7 @@ Delete(arr2, (item) => item.id === 2); // Remove item with id 2
 ### Function Utils
 
 ```typescript
-import { iife, memorize, debounce } from "@gitborlando-owner/g-util";
+import { iife, memorize, debounce } from "@gitborlando/utils";
 
 // Immediately Invoked Function Expression
 const result = iife(() => {
@@ -209,7 +209,7 @@ search("React Hook"); // Execute this after 300ms
 ### Conditional Matching
 
 ```typescript
-import { matchCase, macroMatch } from "@gitborlando-owner/g-util";
+import { matchCase, macroMatch } from "@gitborlando/utils";
 
 // Type-safe conditional matching
 type Status = "loading" | "success" | "error";
@@ -237,7 +237,7 @@ console.log(isValidStatus("pending")); // false
 ### Object Operations
 
 ```typescript
-import { clone, objKeys, useObjectKey } from "@gitborlando-owner/g-util";
+import { clone, objKeys, useObjectKey } from "@gitborlando/utils";
 
 // Deep clone
 const original = {
@@ -267,7 +267,7 @@ console.log(useObjectKey(obj1)); // 'abc123' (same object returns same ID)
 ### Debug Utils
 
 ```typescript
-import { Log, jsonFy, jsonParse } from "@gitborlando-owner/g-util";
+import { Log, jsonFy, jsonParse } from "@gitborlando/utils";
 
 // Chain debug logging
 const result = [1, 2, 3]
@@ -284,7 +284,7 @@ const parsed = jsonParse(json); // Parse back to object
 ## 🎯 Drag Utils
 
 ```typescript
-import { DragUtil } from "@gitborlando-owner/g-util";
+import { DragUtil } from "@gitborlando/utils";
 
 const drag = new DragUtil();
 
@@ -342,7 +342,7 @@ import {
   isRightMouse,
   stopPropagation,
   preventDefault,
-} from "@gitborlando-owner/g-util";
+} from "@gitborlando/utils";
 
 // Event listening (auto returns cleanup function)
 const unlisten = listen("click", (e) => {
@@ -391,7 +391,7 @@ import {
   dSin,
   degreeFy,
   radianFy,
-} from "@gitborlando-owner/g-util";
+} from "@gitborlando/utils";
 
 // Power functions
 pow2(5); // 25
@@ -418,11 +418,7 @@ radianFy(180); // Math.PI
 ### Geometry Utils
 
 ```typescript
-import {
-  rotatePoint,
-  normalAngle,
-  numberHalfFix,
-} from "@gitborlando-owner/g-util";
+import { rotatePoint, normalAngle, numberHalfFix } from "@gitborlando/utils";
 
 // Point rotation
 const [newX, newY] = rotatePoint(
@@ -446,7 +442,7 @@ numberHalfFix(0.1 + 0.2); // 0.3
 ### Basic Coordinate Operations
 
 ```typescript
-import { xy_, xy_from, xy_client, xy_center } from "@gitborlando-owner/g-util";
+import { xy_, xy_from, xy_client, xy_center } from "@gitborlando/utils";
 
 // Create coordinates
 const point = xy_(10, 20); // {x: 10, y: 20}
@@ -477,7 +473,7 @@ import {
   xy_rotate,
   xy_dot,
   xy_symmetric,
-} from "@gitborlando-owner/g-util";
+} from "@gitborlando/utils";
 
 const p1 = xy_(10, 20);
 const p2 = xy_(30, 40);
@@ -498,7 +494,7 @@ xy_symmetric(p1, xy_(0, 0)); // Symmetric about origin: {x: -10, y: -20}
 ### XY Class
 
 ```typescript
-import { XY } from "@gitborlando-owner/g-util";
+import { XY } from "@gitborlando/utils";
 
 // Create XY instance
 const xy = new XY(10, 20);
@@ -522,7 +518,7 @@ const fromObj = XY.From({ x: 10, y: 20 }); // new XY(10, 20)
 ## 🎪 Wheel Utils
 
 ```typescript
-import { WheelUtil } from "@gitborlando-owner/g-util";
+import { WheelUtil } from "@gitborlando/utils";
 
 const wheel = new WheelUtil();
 
@@ -559,7 +555,7 @@ element.addEventListener("wheel", (e) => {
 ## 💾 Storage Utils
 
 ```typescript
-import { StorageUtil } from "@gitborlando-owner/g-util";
+import { StorageUtil } from "@gitborlando/utils";
 
 const storage = new StorageUtil();
 
@@ -598,7 +594,7 @@ const retrievedMap = storage.get<Map<string, any>>("userMap"); // Map object
 ## 🚀 Animation Utils
 
 ```typescript
-import { Raf } from "@gitborlando-owner/g-util";
+import { Raf } from "@gitborlando/utils";
 
 const raf = new Raf();
 
