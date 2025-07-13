@@ -28,5 +28,14 @@
   "peerDependencies": {
     "nanoid": "^5.0.0",
     "react": "^19.0.0"
+  },
+  "prettier": {
+    "printWidth": 85,
+    "jsxBracketSameLine": true,
+    "useTabs": false,
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true,
+    "jsxSingleQuote": true
   }
 }
