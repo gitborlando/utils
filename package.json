@@ -1,32 +1,32 @@
 {
-	"name": "g-utils",
-	"version": "1.0.0",
-	"description": "",
-	"main": "dist/index.mjs",
-	"type": "module",
-	"scripts": {
-		"prepare": "husky",
-		"dev": "unbuild --watch",
-		"build": "unbuild",
-		"release": "pnpm build && pnpm publish"
-	},
-	"files": [
-		"dist",
-		"README.md"
-	],
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"publishConfig": {
-		"access": "public"
-	},
-	"devDependencies": {
-		"husky": "^9.1.7",
-		"pretty-quick": "^4.2.2",
-		"unbuild": "^3.5.0"
-	},
-	"peerDependencies": {
-		"nanoid": "^5.0.0",
-		"react": "^19.0.0"
-	}
+  "name": "g-util",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.mjs",
+  "type": "module",
+  "scripts": {
+    "prepare": "husky",
+    "dev": "unbuild --watch",
+    "build": "unbuild",
+    "release": "pnpm build && pnpm publish"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "pretty-quick": "^4.2.2",
+    "unbuild": "^3.5.0"
+  },
+  "peerDependencies": {
+    "nanoid": "^5.0.0",
+    "react": "^19.0.0"
+  }
 }
