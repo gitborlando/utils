@@ -1,5 +1,5 @@
 {
-  "name": "g-util",
+  "name": "@gitborlando-owner/g-util",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.mjs",

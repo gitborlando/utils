@@ -7,7 +7,7 @@ JavaScript/TypeScript 实用工具集合
 ## 安装
 
 ```bash
-npm install g-util
+npm install @gitborlando-owner/g-util
 ```
 
 ## 🔧 数组工具
@@ -15,7 +15,12 @@ npm install g-util
 ### 基础操作
 
 ```typescript
-import { firstOne, lastOne, stableIndex, createArray } from "g-util";
+import {
+  firstOne,
+  lastOne,
+  stableIndex,
+  createArray,
+} from "@gitborlando-owner/g-util";
 
 // 获取第一个元素 (支持数组和Set)
 firstOne([1, 2, 3]); // 1
@@ -41,7 +46,7 @@ createArray(3); // [0, 1, 2]
 ### 高级遍历
 
 ```typescript
-import { loopFor, reverseFor, reverse } from "g-util";
+import { loopFor, reverseFor, reverse } from "@gitborlando-owner/g-util";
 
 // 循环遍历 (可访问当前、下一个、上一个元素)
 const arr = ["A", "B", "C"];
@@ -65,7 +70,7 @@ console.log(original); // [1, 2, 3] (原数组不变)
 ### 函数批处理
 
 ```typescript
-import { flushFuncs } from "g-util";
+import { flushFuncs } from "@gitborlando-owner/g-util";
 
 // 批量执行函数并清空容器
 const callbacks = [
@@ -90,7 +95,7 @@ flushFuncs(callbackSet); // 执行并清空Set
 ### Map缓存
 
 ```typescript
-import { createCache } from "g-util";
+import { createCache } from "@gitborlando-owner/g-util";
 
 const cache = createCache<string, number>();
 
@@ -127,7 +132,7 @@ cache.entries(); // IterableIterator<[string, number]>
 ### 对象缓存
 
 ```typescript
-import { createObjCache } from "g-util";
+import { createObjCache } from "@gitborlando-owner/g-util";
 
 const objCache = createObjCache<string>();
 
@@ -151,7 +156,7 @@ const obj = objCache.toObject(); // { name: 'John', age: '30', role: 'admin' }
 ### 删除操作
 
 ```typescript
-import { Delete } from "g-util";
+import { Delete } from "@gitborlando-owner/g-util";
 
 // 删除对象属性
 const obj = { a: 1, b: 2, c: 3 };
@@ -173,7 +178,7 @@ Delete(arr2, (item) => item.id === 2); // 删除 id 为 2 的项
 ### 函数工具
 
 ```typescript
-import { iife, memorize, debounce } from "g-util";
+import { iife, memorize, debounce } from "@gitborlando-owner/g-util";
 
 // 立即执行函数表达式
 const result = iife(() => {
@@ -204,7 +209,7 @@ search("React Hook"); // 300ms后执行这个
 ### 条件匹配
 
 ```typescript
-import { matchCase, macroMatch } from "g-util";
+import { matchCase, macroMatch } from "@gitborlando-owner/g-util";
 
 // 类型安全的条件匹配
 type Status = "loading" | "success" | "error";
@@ -232,7 +237,7 @@ console.log(isValidStatus("pending")); // false
 ### 对象操作
 
 ```typescript
-import { clone, objKeys, useObjectKey } from "g-util";
+import { clone, objKeys, useObjectKey } from "@gitborlando-owner/g-util";
 
 // 深度克隆
 const original = {
@@ -262,7 +267,7 @@ console.log(useObjectKey(obj1)); // 'abc123' (相同对象返回相同ID)
 ### 调试工具
 
 ```typescript
-import { Log, jsonFy, jsonParse } from "g-util";
+import { Log, jsonFy, jsonParse } from "@gitborlando-owner/g-util";
 
 // 链式调试日志
 const result = [1, 2, 3]
@@ -279,7 +284,7 @@ const parsed = jsonParse(json); // 解析回对象
 ## 🎯 拖拽工具
 
 ```typescript
-import { DragUtil } from "g-util";
+import { DragUtil } from "@gitborlando-owner/g-util";
 
 const drag = new DragUtil();
 
@@ -337,7 +342,7 @@ import {
   isRightMouse,
   stopPropagation,
   preventDefault,
-} from "g-util";
+} from "@gitborlando-owner/g-util";
 
 // 事件监听 (自动返回清理函数)
 const unlisten = listen("click", (e) => {
@@ -386,7 +391,7 @@ import {
   dSin,
   degreeFy,
   radianFy,
-} from "g-util";
+} from "@gitborlando-owner/g-util";
 
 // 平方和立方
 pow2(5); // 25
@@ -413,7 +418,11 @@ radianFy(180); // Math.PI
 ### 几何工具
 
 ```typescript
-import { rotatePoint, normalAngle, numberHalfFix } from "g-util";
+import {
+  rotatePoint,
+  normalAngle,
+  numberHalfFix,
+} from "@gitborlando-owner/g-util";
 
 // 点旋转
 const [newX, newY] = rotatePoint(
@@ -437,7 +446,7 @@ numberHalfFix(0.1 + 0.2); // 0.3
 ### 基础坐标操作
 
 ```typescript
-import { xy_, xy_from, xy_client, xy_center } from "g-util";
+import { xy_, xy_from, xy_client, xy_center } from "@gitborlando-owner/g-util";
 
 // 创建坐标
 const point = xy_(10, 20); // {x: 10, y: 20}
@@ -468,7 +477,7 @@ import {
   xy_rotate,
   xy_dot,
   xy_symmetric,
-} from "g-util";
+} from "@gitborlando-owner/g-util";
 
 const p1 = xy_(10, 20);
 const p2 = xy_(30, 40);
@@ -489,7 +498,7 @@ xy_symmetric(p1, xy_(0, 0)); // 关于原点对称: {x: -10, y: -20}
 ### XY 类
 
 ```typescript
-import { XY } from "g-util";
+import { XY } from "@gitborlando-owner/g-util";
 
 // 创建XY实例
 const xy = new XY(10, 20);
@@ -513,7 +522,7 @@ const fromObj = XY.From({ x: 10, y: 20 }); // new XY(10, 20)
 ## 🎪 滚轮工具
 
 ```typescript
-import { WheelUtil } from "g-util";
+import { WheelUtil } from "@gitborlando-owner/g-util";
 
 const wheel = new WheelUtil();
 
@@ -550,7 +559,7 @@ element.addEventListener("wheel", (e) => {
 ## 💾 存储工具
 
 ```typescript
-import { StorageUtil } from "g-util";
+import { StorageUtil } from "@gitborlando-owner/g-util";
 
 const storage = new StorageUtil();
 
@@ -589,7 +598,7 @@ const retrievedMap = storage.get<Map<string, any>>("userMap"); // Map 对象
 ## 🚀 动画工具
 
 ```typescript
-import { Raf } from "g-util";
+import { Raf } from "@gitborlando-owner/g-util";
 
 const raf = new Raf();
 
