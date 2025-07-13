@@ -1,5 +1,5 @@
 {
-	"name": "utils",
+	"name": "g-utils",
 	"version": "1.0.0",
 	"description": "",
 	"main": "dist/index.mjs",
@@ -7,11 +7,19 @@
 	"scripts": {
 		"prepare": "husky",
 		"dev": "unbuild --watch",
-		"build": "unbuild"
+		"build": "unbuild",
+		"release": "pnpm build && pnpm publish"
 	},
+	"files": [
+		"dist",
+		"README.md"
+	],
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
+	"publishConfig": {
+		"access": "public"
+	},
 	"devDependencies": {
 		"husky": "^9.1.7",
 		"pretty-quick": "^4.2.2",

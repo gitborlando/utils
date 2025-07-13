@@ -83,7 +83,7 @@ export function jsonParse(obj: any) {
 	try {
 		return JSON.parse(obj)
 	} catch (e) {
-		console.log('jsonFy error', e)
+		console.log('jsonParse error', e)
 	}
 }
 
