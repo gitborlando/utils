@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+msg_file=$1
+msg=$(cat "$msg_file")
+source=$2
+branch=$(git symbolic-ref --short HEAD)
+
+if [[ "$source" == "squash" || "$source" == "rebase" ]]; then
+  exit 0
+fi
+
+# 检查是否为 merge commit（提交信息以 "Merge branch" 开头）
+if echo "$msg" | grep -q "^Merge branch"; then
+  # 提取 source 分支名
+  source=$(echo "$msg" | sed -n 's/^Merge branch '\''\([^'\'']*\)'\''.*/\1/p')
+  # target 就是当前分支
+  target=$branch
+  # 生成新提交信息
+  echo "[merge]  $source >> $target" > "$msg_file"
+  exit 0
+fi
+
+# 普通提交，自动加 [分支名] 前缀（如前面所述）
+if ! echo "$msg" | grep -q "^\[$branch\]"; then
+  echo "[$branch]  $msg" > "$msg_file"
+fi

@@ -1,0 +1,24 @@
+{
+	"name": "utils",
+	"version": "1.0.0",
+	"description": "",
+	"main": "dist/index.mjs",
+	"type": "module",
+	"scripts": {
+		"prepare": "husky",
+		"dev": "unbuild --watch",
+		"build": "unbuild"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"husky": "^9.1.7",
+		"pretty-quick": "^4.2.2",
+		"unbuild": "^3.5.0"
+	},
+	"peerDependencies": {
+		"nanoid": "^5.0.0",
+		"react": "^19.0.0"
+	}
+}
