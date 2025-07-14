@@ -6,13 +6,14 @@ export const isRightMouse = (e: MouseEvent) => e.button === 2
 export type EventListenOptions = {
   capture?: boolean
   once?: boolean
+  target?: any
 }
 
-type WindowEventKeys = keyof WindowEventMap
+export type WindowEventKeys = keyof WindowEventMap
 
-type ListenFunc<K extends WindowEventKeys> = (
+export type ListenFunc<K extends WindowEventKeys> = (
   this: Window,
-  ev: WindowEventMap[K]
+  ev: WindowEventMap[K],
 ) => any
 
 export function listen<K extends WindowEventKeys>(
@@ -35,8 +36,9 @@ export function listen<K extends WindowEventKeys>(
     return [type, options, listener] as [K, EventListenOptions, ListenFunc<K>]
   })
 
-  window.addEventListener(type, listener, options)
-  return () => window.removeEventListener(type, listener, options)
+  const target = options.target || window
+  target.addEventListener(type, listener, options)
+  return () => target.removeEventListener(type, listener, options)
 }
 
 export function stopPropagation(callback?: (e?: any) => any) {
