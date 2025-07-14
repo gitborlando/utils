@@ -22,12 +22,12 @@ export class DragUtil {
   private endHandler?: (event: MouseEvent) => any
   private isInfinity = false
 
-  needInfinity() {
+  needInfinity = () => {
     this.isInfinity = true
     return this
   }
 
-  onDown(callback?: (data: DragData) => void) {
+  onDown = (callback?: (data: DragData) => void) => {
     if (this.downHandler) return this
 
     this.downHandler = ({ clientX, clientY }) => {
@@ -53,7 +53,7 @@ export class DragUtil {
     return this
   }
 
-  onStart(callback?: (data: DragData) => void) {
+  onStart = (callback?: (data: DragData) => void) => {
     if (this.startHandler) return this
 
     this.startHandler = ({ clientX, clientY }) => {
@@ -78,7 +78,7 @@ export class DragUtil {
     return this
   }
 
-  onMove(callback: (data: DragData) => void) {
+  onMove = (callback: (data: DragData) => void) => {
     if (this.moveHandler) return this
 
     this.moveHandler = (event) => {
@@ -110,7 +110,7 @@ export class DragUtil {
     return this
   }
 
-  onDestroy(callback?: (data: DragData) => void) {
+  onDestroy = (callback?: (data: DragData) => void) => {
     if (this.endHandler) return this
 
     this.endHandler = () => {
@@ -132,12 +132,12 @@ export class DragUtil {
     return this
   }
 
-  onSlide(callback: (data: DragData) => void) {
+  onSlide = (callback: (data: DragData) => void) => {
     this.onStart().onMove(callback).onDestroy()
     return this
   }
 
-  private destroy() {
+  private destroy = () => {
     window.removeEventListener('mousedown', this.downHandler || noopFunc)
     window.removeEventListener('mousedown', this.startHandler || noopFunc)
     window.removeEventListener('mousemove', this.moveHandler || noopFunc)
@@ -154,7 +154,7 @@ export class DragUtil {
     this.setDataToDefault()
   }
 
-  private calculateMarquee() {
+  private calculateMarquee = () => {
     this.marquee = { x: this.start.x, y: this.start.y, width: 0, height: 0 }
     if (this.shift.x >= 0 && this.shift.y >= 0) {
       this.marquee.width = this.shift.x
@@ -179,7 +179,7 @@ export class DragUtil {
     return this.marquee
   }
 
-  private setDataToDefault() {
+  private setDataToDefault = () => {
     this.started = false
     this.canMove = false
     this.isInfinity = false

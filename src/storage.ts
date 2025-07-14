@@ -6,7 +6,7 @@ type StorageItem = {
 }
 
 export class StorageUtil {
-  set<T>(key: string, value: T) {
+  set = <T>(key: string, value: T) => {
     const item = iife<StorageItem>(() => {
       if (value instanceof Set) return { type: 'set', value: [...value] }
       if (value instanceof Map)
@@ -16,7 +16,7 @@ export class StorageUtil {
     this.#store(key, item)
   }
 
-  get<T>(key: string) {
+  get = <T>(key: string) => {
     const item = this.#get(key)
     if (!item) return
     if (item.type === 'set') return new Set(item.value) as T
@@ -24,15 +24,15 @@ export class StorageUtil {
     return item.value as T
   }
 
-  #store(key: string, value: StorageItem) {
+  #store = (key: string, value: StorageItem) => {
     localStorage.setItem(key, jsonFy(value)!)
   }
 
-  #get(key: string) {
+  #get = (key: string) => {
     return jsonParse(localStorage.getItem(key)) as unknown as StorageItem
   }
 
-  #mapToObject(map: Map<any, any>) {
+  #mapToObject = (map: Map<any, any>) => {
     return Object.fromEntries(map.entries())
   }
 }

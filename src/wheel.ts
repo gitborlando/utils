@@ -1,4 +1,4 @@
-type WheelData = { e: WheelEvent; direction: 1 | -1 }
+export type WheelData = { e: WheelEvent; direction: 1 | -1 }
 
 export class WheelUtil {
   private beforeWheelHandler?: (data: WheelData) => void
@@ -7,19 +7,19 @@ export class WheelUtil {
   private wheelTimeOut?: any
   private curFrameTriggered = false
 
-  onBeforeWheel(callback: (data: WheelData) => void) {
-    this.beforeWheelHandler = callback
+  onBeforeWheel = (handler: (data: WheelData) => void) => {
+    this.beforeWheelHandler = handler
   }
 
-  onDuringWheel(callback: (data: WheelData) => void) {
-    this.duringWheelHandler = callback
+  onDuringWheel = (handler: (data: WheelData) => void) => {
+    this.duringWheelHandler = handler
   }
 
-  onAfterWheel(callback: (data: WheelData) => void) {
-    this.afterWheelHandler = callback
+  onAfterWheel = (handler: (data: WheelData) => void) => {
+    this.afterWheelHandler = handler
   }
 
-  onWheel(e: WheelEvent) {
+  onWheel = (e: WheelEvent) => {
     const direction = e.deltaY > 0 ? 1 : -1
 
     if (this.wheelTimeOut) {
