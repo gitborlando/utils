@@ -8,7 +8,7 @@ export function Delete<T>(object: Record<string, T>, key: string): void
 export function Delete<T>(target: T[], find: string | ((value: T) => void)): void
 export function Delete<T>(
   target: Record<string, T> | T[],
-  filter: string | ((value: T) => void)
+  filter: string | ((value: T) => void),
 ) {
   if (Array.isArray(target)) {
     const index =
@@ -27,12 +27,12 @@ export function iife<T extends any = any>(callback: () => T): T {
 
 export function matchCase<T extends string, R extends any>(
   Case: T,
-  obj: Record<T, R>
+  obj: Record<T, R>,
 ): R
 export function matchCase<T extends string, R extends any>(
   Case: T,
   Default: R,
-  obj: Record<T, R>
+  obj: Record<T, R>,
 ): R
 export function matchCase<T extends string, R extends any>(
   ...args: [T, R, Record<T, R>] | [T, Record<T, R>]
@@ -60,7 +60,7 @@ export function macroMatch(_input: TemplateStringsArray) {
       'left',
       right.reduce((all, i) => {
         return `if(left === ${i})return true;` + all
-      }, 'return false;')
+      }, 'return false;'),
     )
   })
   return (left: any) => test(left)
@@ -103,7 +103,7 @@ export function memorize<T extends any[], R extends any>(func: (...args: T) => R
 
 export function debounce<T extends any[], R extends any>(
   wait: number,
-  func: (...args: T) => R
+  func: (...args: T) => R,
 ) {
   let timeout: any
   return (...args: T) => {
@@ -136,4 +136,11 @@ export function objectKey(obj: AnyObject) {
     objectKeyMap.set(obj, nanoid())
   }
   return objectKeyMap.get(obj)
+}
+
+export function suffixOf(input?: string) {
+  if (!input) return ''
+  const index = input.lastIndexOf('.')
+  if (index === -1) return ''
+  return input.slice(index + 1)
 }

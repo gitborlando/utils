@@ -42,7 +42,7 @@ export function rotatePoint(
   ay: number,
   ox: number,
   oy: number,
-  degree: number
+  degree: number,
 ) {
   const radian = radianFy(degree)
   return {
@@ -53,4 +53,8 @@ export function rotatePoint(
 
 export function normalAngle(angle: number) {
   return (angle + 360) % 360
+}
+
+export function snapAngle(angle: number, step = 90) {
+  return normalAngle(Math.round(angle / step) * step)
 }
