@@ -144,3 +144,24 @@ export function suffixOf(input?: string) {
   if (index === -1) return ''
   return input.slice(index + 1)
 }
+
+export function createFuncAOP<T extends (...args: any[]) => any>(
+  before?: (...args: any[]) => void,
+  after?: (...args: any[]) => void,
+) {
+  return (func: T) => {
+    return (...args: Parameters<T>) => {
+      before?.(...args)
+      const result = func(...args)
+      after?.(...args)
+      return result
+    }
+  }
+}
+
+export function SetTimeout(func: () => any, time = 0) {
+  const id = setTimeout(() => {
+    func()
+    clearTimeout(id)
+  }, time)
+}
