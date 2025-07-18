@@ -11,14 +11,46 @@
   },
   "scripts": {
     "prepare": "husky",
-    "dev": "unbuild --watch",
-    "build": "unbuild",
-    "release": "pnpm build && pnpm publish"
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "release": "pnpm build && pnpm publish",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run"
   },
   "files": [
     "dist",
     "README.md"
   ],
+  "author": "",
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.14",
+    "@types/react": "^19.1.8",
+    "@vitest/ui": "^3.2.4",
+    "husky": "^9.1.7",
+    "pretty-quick": "^4.2.2",
+    "tsup": "^8.5.0",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "camelcase": ">=7.0.0",
+    "nanoid": "^5.0.0",
+    "react": ">=16.8.0"
+  },
+  "prettier": {
+    "printWidth": 85,
+    "jsxBracketSameLine": true,
+    "useTabs": false,
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true,
+    "jsxSingleQuote": true
+  },
   "keywords": [
     "utils",
     "utilities",
@@ -84,29 +116,5 @@
     "import",
     "export",
     "gitborlando"
-  ],
-  "author": "",
-  "license": "ISC",
-  "publishConfig": {
-    "access": "public"
-  },
-  "devDependencies": {
-    "@types/react": "^19.1.8",
-    "husky": "^9.1.7",
-    "pretty-quick": "^4.2.2",
-    "unbuild": "^3.5.0"
-  },
-  "peerDependencies": {
-    "nanoid": "^5.0.0",
-    "react": "^19.0.0"
-  },
-  "prettier": {
-    "printWidth": 85,
-    "jsxBracketSameLine": true,
-    "useTabs": false,
-    "tabWidth": 2,
-    "semi": false,
-    "singleQuote": true,
-    "jsxSingleQuote": true
-  }
+  ]
 }
