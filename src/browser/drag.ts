@@ -1,5 +1,5 @@
-import { xy_, xy_minus, xy_plus } from './math/xy'
-import { IRect, IXY, noopFunc } from './types'
+import { xy_, xy_minus, xy_plus } from 'src/math/xy'
+import { IRect, IXY, noopFunc } from 'src/types'
 
 export type DragData = {
   current: IXY

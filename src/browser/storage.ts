@@ -1,4 +1,4 @@
-import { iife, jsonFy, jsonParse } from './common'
+import { iife, jsonFy, jsonParse } from 'src/common'
 
 type StorageItem = {
   type: 'normal' | 'map' | 'set'

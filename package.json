@@ -1,6 +1,6 @@
 {
   "name": "@gitborlando/utils",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "",
   "type": "module",
   "exports": {
@@ -35,6 +35,7 @@
     "husky": "^9.1.7",
     "pretty-quick": "^4.2.2",
     "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
     "vitest": "^3.2.4"
   },
   "peerDependencies": {

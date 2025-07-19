@@ -3,9 +3,15 @@
 msg_file=$1
 msg=$(cat "$msg_file")
 source=$2
-branch=$(git symbolic-ref --short HEAD)
+branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo "detached")
 
-if [[ "$source" == "squash" || "$source" == "rebase" ]]; then
+# 如果 HEAD 不是指向分支，跳过（比如在 rebase 中的 amend）
+if [[ "$branch" == "detached" ]]; then
+  exit 0
+fi
+
+# squash 或 rebase 的提交，也跳过
+if [[ "$source" == "commit" || "$source" == "squash" || "$source" == "rebase" ]]; then
   exit 0
 fi
 

@@ -67,14 +67,10 @@ export function macroMatch(_input: TemplateStringsArray) {
 }
 
 export function clone<T extends any>(object: T): T {
-  if (typeof object !== 'object') return object
+  if (typeof object !== 'object' || object === null) return object
   const newObj: any = Array.isArray(object) ? [] : {}
   for (const key in object) newObj[key] = clone(object[key])
   return newObj
-}
-
-export function notUndefine<T extends any>(val: T | undefined): val is T {
-  return val !== undefined
 }
 
 export function jsonFy(obj: any) {
@@ -130,7 +126,6 @@ export class Raf {
 }
 
 const objectKeyMap = new WeakMap<AnyObject, string>()
-
 export function objectKey(obj: AnyObject) {
   if (!objectKeyMap.has(obj)) {
     objectKeyMap.set(obj, nanoid())
@@ -138,11 +133,12 @@ export function objectKey(obj: AnyObject) {
   return objectKeyMap.get(obj)
 }
 
-export function suffixOf(input?: string) {
+export function suffixOf(input?: string, lowerCase = false) {
   if (!input) return ''
   const index = input.lastIndexOf('.')
   if (index === -1) return ''
-  return input.slice(index + 1)
+  const suffix = input.slice(index + 1)
+  return lowerCase ? suffix.toLowerCase() : suffix
 }
 
 export function createFuncAOP<T extends (...args: any[]) => any>(

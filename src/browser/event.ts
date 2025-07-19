@@ -1,4 +1,4 @@
-import { iife } from './common'
+import { iife } from 'src/common'
 
 export const isLeftMouse = (e: MouseEvent) => e.button === 0
 export const isRightMouse = (e: MouseEvent) => e.button === 2
