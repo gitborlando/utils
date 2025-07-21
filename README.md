@@ -1,4 +1,4 @@
-# G-Utils
+# Gitborlando-Utils
 
 JavaScript/TypeScript 实用工具集合
 
