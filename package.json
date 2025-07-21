@@ -1,6 +1,6 @@
 {
   "name": "@gitborlando/utils",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "",
   "type": "module",
   "exports": {
@@ -14,6 +14,7 @@
     "dev": "tsup --watch",
     "build": "tsup",
     "release": "pnpm build && pnpm publish",
+    "clean": "rm -rf dist node_modules pnpm-lock.yaml",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run"

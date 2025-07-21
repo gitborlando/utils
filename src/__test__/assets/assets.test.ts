@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { generateAssets, GenerateAssetsOptions } from '../../script/assets'
+import { generateAssets, GenerateAssetsOptions } from '../../script/gen-assets'
 
 // Mock fs module
 vi.mock('fs', () => ({

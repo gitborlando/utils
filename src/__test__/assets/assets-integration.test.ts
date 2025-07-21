@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { generateAssets, GenerateAssetsOptions } from '../../script/assets'
+import { generateAssets, GenerateAssetsOptions } from '../../script/gen-assets'
 
 describe('generateAssets 集成测试', () => {
   let tempDir: string
