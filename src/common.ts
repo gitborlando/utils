@@ -1,4 +1,5 @@
 import { nanoid } from 'nanoid'
+import { Is } from 'src/is'
 import { createObjCache } from './cache'
 import { AnyObject, NoopFunc } from './types'
 
@@ -160,4 +161,13 @@ export function SetTimeout(func: () => any, time = 0) {
     func()
     clearTimeout(id)
   }, time)
+}
+
+export function optionalSet<T>(
+  target: T | undefined | null,
+  key: keyof T,
+  value: T[keyof T],
+) {
+  if (Is.nullable(target)) return
+  target[key] = value
 }

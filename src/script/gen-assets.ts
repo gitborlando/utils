@@ -5,7 +5,7 @@ import path from 'path'
 export interface GenerateAssetsOptions {
   sourceDir: string
   outputFile: string
-  watch: boolean
+  watch?: boolean
 }
 
 const options: GenerateAssetsOptions = {
