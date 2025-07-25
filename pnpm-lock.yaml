@@ -7,16 +7,13 @@ settings:
 importers:
   .:
     dependencies:
-      camelcase:
-        specifier: '>=7.0.0'
-        version: 8.0.0
-      nanoid:
-        specifier: ^5.0.0
-        version: 5.1.5
       react:
         specifier: '>=16.8.0'
         version: 19.1.0
     devDependencies:
+      '@gitborlando/geo':
+        specifier: ^1.0.1
+        version: 1.0.1
       '@types/node':
         specifier: ^24.0.14
         version: 24.0.15
@@ -26,9 +23,15 @@ importers:
       '@vitest/ui':
         specifier: ^3.2.4
         version: 3.2.4(vitest@3.2.4)
+      camelcase:
+        specifier: ^8.0.0
+        version: 8.0.0
       husky:
         specifier: ^9.1.7
         version: 9.1.7
+      nanoid:
+        specifier: ^5.1.5
+        version: 5.1.5
       pretty-quick:
         specifier: ^4.2.2
         version: 4.2.2(prettier@3.6.2)
@@ -277,6 +280,12 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@gitborlando/geo@1.0.1':
+    resolution:
+      {
+        integrity: sha512-JbLVqJfmt47BRMjno8Blk+g5ehOdhW2GxQO84eU5+XHlj3LL2pZWTV7WWukfJsEcs6/LInFpJPVPZvRscblZ2w==,
+      }
+
   '@isaacs/cliui@8.0.2':
     resolution:
       {
@@ -384,7 +393,6 @@ packages:
       }
     cpu: [arm]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-arm-musleabihf@4.45.1':
     resolution:
@@ -393,7 +401,6 @@ packages:
       }
     cpu: [arm]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-arm64-gnu@4.45.1':
     resolution:
@@ -402,7 +409,6 @@ packages:
       }
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-arm64-musl@4.45.1':
     resolution:
@@ -411,7 +417,6 @@ packages:
       }
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-loongarch64-gnu@4.45.1':
     resolution:
@@ -420,7 +425,6 @@ packages:
       }
     cpu: [loong64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-powerpc64le-gnu@4.45.1':
     resolution:
@@ -429,7 +433,6 @@ packages:
       }
     cpu: [ppc64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-riscv64-gnu@4.45.1':
     resolution:
@@ -438,7 +441,6 @@ packages:
       }
     cpu: [riscv64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-riscv64-musl@4.45.1':
     resolution:
@@ -447,7 +449,6 @@ packages:
       }
     cpu: [riscv64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-s390x-gnu@4.45.1':
     resolution:
@@ -456,7 +457,6 @@ packages:
       }
     cpu: [s390x]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-x64-gnu@4.45.1':
     resolution:
@@ -465,7 +465,6 @@ packages:
       }
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-x64-musl@4.45.1':
     resolution:
@@ -474,7 +473,6 @@ packages:
       }
     cpu: [x64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-win32-arm64-msvc@4.45.1':
     resolution:
@@ -1586,6 +1584,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.25.8':
     optional: true
+
+  '@gitborlando/geo@1.0.1': {}
 
   '@isaacs/cliui@8.0.2':
     dependencies:

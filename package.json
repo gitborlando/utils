@@ -1,6 +1,6 @@
 {
   "name": "@gitborlando/utils",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "",
   "type": "module",
   "exports": {
@@ -15,7 +15,12 @@
     "./script": {
       "import": "./dist/script/index.js",
       "types": "./dist/script/index.d.ts"
-    }
+    },
+    "./react": {
+      "import": "./dist/react/index.js",
+      "types": "./dist/react/index.d.ts"
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "prepare": "husky",
@@ -38,18 +43,19 @@
     "registry": "https://registry.npmjs.org"
   },
   "devDependencies": {
+    "@gitborlando/geo": "^1.0.1",
     "@types/node": "^24.0.14",
     "@types/react": "^19.1.8",
     "@vitest/ui": "^3.2.4",
+    "camelcase": "^8.0.0",
     "husky": "^9.1.7",
+    "nanoid": "^5.1.5",
     "pretty-quick": "^4.2.2",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4"
   },
   "peerDependencies": {
-    "camelcase": ">=7.0.0",
-    "nanoid": "^5.0.0",
     "react": ">=16.8.0"
   },
   "prettier": {

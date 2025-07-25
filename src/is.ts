@@ -35,10 +35,13 @@ export class Is {
   static falsy(value: any) {
     return (
       Is.nullable(value) ||
-      value === '' ||
+      value === 'null' ||
+      value === 'undefined' ||
       value === false ||
       value === 'false' ||
-      value === 0
+      value === 0 ||
+      value === '' ||
+      isNaN(value)
     )
   }
   static notFalsy(value: any) {
