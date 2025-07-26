@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid'
 import { Is } from 'src/is'
 import { createObjCache } from './cache'
 import { AnyObject, NoopFunc } from './types'
@@ -170,4 +169,14 @@ export function optionalSet<T>(
 ) {
   if (Is.nullable(target)) return
   target[key] = value
+}
+
+const alphabet = '0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ_abcdefghijklmnpqrstuvwxyz'
+export function nanoid(size = 8) {
+  let id = ''
+  let i = size | 0
+  while (i--) {
+    id += alphabet[(Math.random() * 61) | 0]
+  }
+  return id
 }
