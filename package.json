@@ -49,6 +49,7 @@
     "@vitest/ui": "^3.2.4",
     "camelcase": "^8.0.0",
     "husky": "^9.1.7",
+    "jsdom": "^26.1.0",
     "pretty-quick": "^4.2.2",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3",

@@ -3,8 +3,13 @@ import { defineConfig } from 'vitest/config'
 export default defineConfig({
   test: {
     globals: true,
-    environment: 'node',
-    include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    exclude: ['node_modules', 'dist', '.idea', '.git', '.cache'],
+    environment: 'jsdom',
+    include: ['src/**/__test__/**/*.test.ts'],
+    exclude: ['node_modules', 'dist'],
+  },
+  resolve: {
+    alias: {
+      'src/': new URL('./src/', import.meta.url).pathname,
+    },
   },
 })
