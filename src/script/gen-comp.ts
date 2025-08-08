@@ -3,14 +3,16 @@ import { join, resolve } from 'path'
 
 export interface GenerateComponentOptions {
   kebabCaseName?: boolean
-  componentTemplate?: (name: string) => string
+  tsxTemplate?: (name: string) => string
   lessTemplate?: (name: string) => string
+  dir?: string
 }
 
 export function generateComponent(options: GenerateComponentOptions = {}) {
-  options.componentTemplate ||= defaultComponentTemplate
+  options.tsxTemplate ||= defaultComponentTemplate
   options.lessTemplate ||= defaultLessTemplate
   options.kebabCaseName ??= false
+  options.dir ||= process.cwd()
 
   const componentName = process.argv[2]
 
@@ -36,7 +38,7 @@ export function generateComponent(options: GenerateComponentOptions = {}) {
   const fileName = options.kebabCaseName ? kebabCaseName : componentName
 
   // 定义组件文件夹路径
-  const componentDir = resolve(process.cwd(), fileName)
+  const componentDir = resolve(options.dir, fileName)
 
   // 检查文件夹是否已存在
   if (existsSync(componentDir)) {
@@ -56,7 +58,7 @@ export function generateComponent(options: GenerateComponentOptions = {}) {
   // 创建 TSX 文件
   const tsxPath = join(componentDir, `index.tsx`)
   try {
-    writeFileSync(tsxPath, options.componentTemplate(componentName), 'utf8')
+    writeFileSync(tsxPath, options.tsxTemplate(componentName), 'utf8')
     console.log(`📄 创建文件: ${tsxPath}`)
   } catch (error) {
     console.error('❌ 创建 TSX 文件失败:')

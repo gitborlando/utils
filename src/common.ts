@@ -81,7 +81,7 @@ export function jsonFy(obj: any) {
   }
 }
 
-export function jsonParse(obj: any) {
+export function jsonParse<T = any>(obj: any): T | undefined {
   try {
     return JSON.parse(obj)
   } catch (e) {
