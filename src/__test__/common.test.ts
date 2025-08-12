@@ -11,7 +11,7 @@ import {
   macroMatch,
   matchCase,
   memorize,
-  nanoid,
+  miniId,
   objKeys,
   optionalSet,
   Raf,
@@ -415,24 +415,24 @@ describe('common utilities', () => {
 
   describe('nanoid', () => {
     it('should generate id with default size', () => {
-      const id = nanoid()
+      const id = miniId()
       expect(id).toHaveLength(8)
       expect(typeof id).toBe('string')
     })
 
     it('should generate id with custom size', () => {
-      const id = nanoid(12)
+      const id = miniId(12)
       expect(id).toHaveLength(12)
     })
 
     it('should generate different ids', () => {
-      const id1 = nanoid()
-      const id2 = nanoid()
+      const id1 = miniId()
+      const id2 = miniId()
       expect(id1).not.toBe(id2)
     })
 
     it('should use valid characters', () => {
-      const id = nanoid(100)
+      const id = miniId(100)
       const validChars =
         /^[0-9ABCDEFGHIJKLMNPQRSTUVWXYZabcdefghijklmnpqrstuvwxyz_]+$/
       expect(validChars.test(id)).toBe(true)

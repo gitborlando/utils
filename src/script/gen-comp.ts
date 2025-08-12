@@ -79,35 +79,20 @@ export function generateComponent(options: GenerateComponentOptions = {}) {
 }
 
 const defaultComponentTemplate = (name: string) => {
-  return `import { FC } from 'react'
-import './index.less'
+  return `import './index.less'
 
-export interface ${name}Props {
-  className?: string
-  children?: React.ReactNode
-}
+interface ${name}Props {}
 
-export const ${name}: FC<${name}Props> = ({ 
-  className, 
-  children,
-  ...props 
-}) => {
+export const ${name}: FC<${name}Props> = ({}) => {
   return (
-    <div
-      className={'${name}'}
-      {...props}
-    >
-      {children}
-    </div>
+    <Flex
+      layout="c"
+      className={'${name.toLowerCase()}'}
+    ></Flex>
   )
-}
-
-${name}.displayName = '${name}'`
+}`
 }
 
 const defaultLessTemplate = (name: string) => {
-  return `.${name} {
-
-}
-  `
+  return `.${name.toLowerCase()} {}`
 }

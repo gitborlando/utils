@@ -40,8 +40,7 @@ export class Is {
       value === false ||
       value === 'false' ||
       value === 0 ||
-      value === '' ||
-      isNaN(value)
+      value === ''
     )
   }
   static notFalsy(value: any) {

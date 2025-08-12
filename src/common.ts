@@ -128,7 +128,7 @@ export class Raf {
 const objectKeyMap = new WeakMap<AnyObject, string>()
 export function objectKey(obj: AnyObject) {
   if (!objectKeyMap.has(obj)) {
-    objectKeyMap.set(obj, nanoid())
+    objectKeyMap.set(obj, miniId())
   }
   return objectKeyMap.get(obj)
 }
@@ -171,12 +171,22 @@ export function optionalSet<T>(
   target[key] = value
 }
 
-const alphabet = '0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ_abcdefghijklmnpqrstuvwxyz'
-export function nanoid(size = 8) {
+export function miniId(
+  size = 8,
+  alphabet = '0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ_abcdefghijklmnpqrstuvwxyz',
+) {
   let id = ''
   let i = size | 0
   while (i--) {
     id += alphabet[(Math.random() * 61) | 0]
   }
   return id
+}
+
+export function ensure<T>(
+  maybeUndefinedOrNull: T,
+  fallback: Exclude<T, undefined | null>,
+) {
+  if (maybeUndefinedOrNull) return maybeUndefinedOrNull
+  return (maybeUndefinedOrNull = fallback)
 }
