@@ -81,11 +81,12 @@ export function jsonFy(obj: any) {
   }
 }
 
-export function jsonParse<T = any>(obj: any): T | undefined {
+export function jsonParse<T = any>(obj: any, fallback?: T) {
   try {
-    return JSON.parse(obj)
+    return JSON.parse(obj) as T
   } catch (e) {
     console.log('jsonParse error', e)
+    return fallback
   }
 }
 

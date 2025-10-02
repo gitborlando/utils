@@ -7,6 +7,7 @@ export type EventListenOptions = {
   capture?: boolean
   once?: boolean
   target?: any
+  passive?: boolean
 }
 
 export type WindowEventKeys = keyof WindowEventMap
