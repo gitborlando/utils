@@ -12,7 +12,7 @@ export function generateComponent(options: GenerateComponentOptions = {}) {
   options.tsxTemplate ||= defaultComponentTemplate
   options.lessTemplate ||= defaultLessTemplate
   options.kebabCaseName ??= false
-  options.dir ||= process.cwd()
+  options.dir ||= process.argv[3] || process.cwd()
 
   const componentName = process.argv[2]
 
@@ -58,7 +58,7 @@ export function generateComponent(options: GenerateComponentOptions = {}) {
   // 创建 TSX 文件
   const tsxPath = join(componentDir, `index.tsx`)
   try {
-    writeFileSync(tsxPath, options.tsxTemplate(componentName), 'utf8')
+    writeFileSync(tsxPath, options.tsxTemplate(componentName).trim(), 'utf8')
     console.log(`📄 创建文件: ${tsxPath}`)
   } catch (error) {
     console.error('❌ 创建 TSX 文件失败:')
@@ -68,7 +68,7 @@ export function generateComponent(options: GenerateComponentOptions = {}) {
   // 创建 LESS 文件
   const lessPath = join(componentDir, `index.less`)
   try {
-    writeFileSync(lessPath, options.lessTemplate(componentName), 'utf8')
+    writeFileSync(lessPath, options.lessTemplate(componentName).trim(), 'utf8')
     console.log(`🎨 创建文件: ${lessPath}`)
   } catch (error) {
     console.error('❌ 创建 LESS 文件失败:')
@@ -79,18 +79,16 @@ export function generateComponent(options: GenerateComponentOptions = {}) {
 }
 
 const defaultComponentTemplate = (name: string) => {
-  return `import './index.less'
+  return `import { FC } from 'react'
+import './index.less'
 
 interface ${name}Props {}
 
-export const ${name}: FC<${name}Props> = ({}) => {
+export const ${name}: FC<${name}Props> = observer(({}) => {
   return (
-    <Flex
-      layout="c"
-      className={'${name.toLowerCase()}'}
-    ></Flex>
+    <G className={'${name.toLowerCase()}'}></G>
   )
-}`
+})`
 }
 
 const defaultLessTemplate = (name: string) => {

@@ -25,7 +25,7 @@ export class StorageUtil {
   }
 
   #store = (key: string, value: StorageItem) => {
-    localStorage.setItem(key, jsonFy(value)!)
+    localStorage.setItem(key, jsonFy(value))
   }
 
   #get = (key: string) => {

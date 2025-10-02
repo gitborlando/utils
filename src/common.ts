@@ -74,11 +74,7 @@ export function clone<T extends any>(object: T): T {
 }
 
 export function jsonFy(obj: any) {
-  try {
-    return JSON.stringify(obj, null, 2)
-  } catch (e) {
-    console.log('jsonFy error', e)
-  }
+  return JSON.stringify(obj, null, 2)
 }
 
 export function jsonParse<T = any>(obj: any, fallback?: T) {

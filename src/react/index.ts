@@ -31,7 +31,7 @@ type TagToHTMLElement = {
 }
 
 export function useHTMLElement<T extends keyof TagToHTMLElement>(tag: T) {
-  return useRef<TagToHTMLElement[T]>(null)
+  return useRef<NonNullable<TagToHTMLElement[T]>>(null)
 }
 
 export function withSuspense(node: ReactNode, fallback?: ReactNode) {
