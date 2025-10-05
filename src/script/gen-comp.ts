@@ -7,28 +7,18 @@ export interface GenerateComponentOptions {
   kebabCaseName?: boolean
   tsxTemplate?: (name: string) => string
   lessTemplate?: (name: string) => string
-  componentNamePathPrefix?: string
 }
 
 export function generateComponent(options: GenerateComponentOptions = {}) {
   options.tsxTemplate ||= defaultComponentTemplate
   options.lessTemplate ||= defaultLessTemplate
   options.kebabCaseName ??= true
-  options.componentNamePathPrefix ??= 'src'
 
-  const inputName = pascalCase(process.argv[2])
+  const componentName = pascalCase(process.argv[2])
   const parentDir = process.argv[3] || process.cwd()
 
-  const fileName = options.kebabCaseName ? kebabCase(inputName) : inputName
+  const fileName = options.kebabCaseName ? kebabCase(componentName) : componentName
   const componentDir = resolve(parentDir, fileName)
-
-  let componentName = inputName
-  if (options.componentNamePathPrefix) {
-    componentName = pascalCase(kebabCasePath(componentDir))
-    const divider = pascalCase(kebabCasePath(options.componentNamePathPrefix))
-    const index = componentName.indexOf(divider)
-    componentName = componentName.slice(index + divider.length)
-  }
 
   // 检查文件夹是否已存在
   if (existsSync(componentDir)) {
@@ -72,10 +62,6 @@ const pascalCase = (name: string) => {
   return camelcase(name, { pascalCase: true })
 }
 
-const kebabCasePath = (path: string) => {
-  return path.replace(/\/|\\/g, '-')
-}
-
 const defaultComponentTemplate = (name: string) => {
   return `import { FC } from 'react'
 import './index.less'
@@ -92,8 +78,3 @@ export const ${name}: FC<${name}Props> = observer(({}) => {
 const defaultLessTemplate = (name: string) => {
   return `.${kebabCase(name)} {}`
 }
-
-generateComponent({
-  kebabCaseName: true,
-  componentNamePathPrefix: 'src/script',
-})
