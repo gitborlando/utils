@@ -1,44 +1,34 @@
+import camelcase from 'camelcase'
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
+import kebabCase from 'just-kebab-case'
 import { join, resolve } from 'path'
 
 export interface GenerateComponentOptions {
   kebabCaseName?: boolean
   tsxTemplate?: (name: string) => string
   lessTemplate?: (name: string) => string
-  dir?: string
+  componentNamePathPrefix?: string
 }
 
 export function generateComponent(options: GenerateComponentOptions = {}) {
   options.tsxTemplate ||= defaultComponentTemplate
   options.lessTemplate ||= defaultLessTemplate
-  options.kebabCaseName ??= false
-  options.dir ||= process.argv[3] || process.cwd()
+  options.kebabCaseName ??= true
+  options.componentNamePathPrefix ??= 'src'
 
-  const componentName = process.argv[2]
+  const inputName = pascalCase(process.argv[2])
+  const parentDir = process.argv[3] || process.cwd()
 
-  if (!componentName) {
-    console.error('❌ 错误: 请提供组件名称')
-    console.log('📝 用法: node scripts/gen-component.js <组件名>')
-    console.log('📝 示例: node scripts/gen-component.js MyButton')
-    process.exit(1)
+  const fileName = options.kebabCaseName ? kebabCase(inputName) : inputName
+  const componentDir = resolve(parentDir, fileName)
+
+  let componentName = inputName
+  if (options.componentNamePathPrefix) {
+    componentName = pascalCase(kebabCasePath(componentDir))
+    const divider = pascalCase(kebabCasePath(options.componentNamePathPrefix))
+    const index = componentName.indexOf(divider)
+    componentName = componentName.slice(index + divider.length)
   }
-
-  // 验证组件名格式（首字母大写的驼峰命名）
-  if (!/^[A-Z][a-zA-Z0-9]*$/.test(componentName)) {
-    console.error('❌ 错误: 组件名必须以大写字母开头，只能包含字母和数字')
-    console.log('📝 正确格式示例: MyButton, UserCard, NavigationBar')
-    process.exit(1)
-  }
-
-  // 将组件名转换为 kebab-case
-  const kebabCaseName = componentName.replace(/([A-Z])/g, (match, letter, index) => {
-    return index === 0 ? letter.toLowerCase() : '-' + letter.toLowerCase()
-  })
-
-  const fileName = options.kebabCaseName ? kebabCaseName : componentName
-
-  // 定义组件文件夹路径
-  const componentDir = resolve(options.dir, fileName)
 
   // 检查文件夹是否已存在
   if (existsSync(componentDir)) {
@@ -78,6 +68,14 @@ export function generateComponent(options: GenerateComponentOptions = {}) {
   console.log('\n✅ 组件创建成功!')
 }
 
+const pascalCase = (name: string) => {
+  return camelcase(name, { pascalCase: true })
+}
+
+const kebabCasePath = (path: string) => {
+  return path.replace(/\/|\\/g, '-')
+}
+
 const defaultComponentTemplate = (name: string) => {
   return `import { FC } from 'react'
 import './index.less'
@@ -86,11 +84,16 @@ interface ${name}Props {}
 
 export const ${name}: FC<${name}Props> = observer(({}) => {
   return (
-    <G className={'${name.toLowerCase()}'}></G>
+    <G className='${kebabCase(name)}'></G>
   )
 })`
 }
 
 const defaultLessTemplate = (name: string) => {
-  return `.${name.toLowerCase()} {}`
+  return `.${kebabCase(name)} {}`
 }
+
+generateComponent({
+  kebabCaseName: true,
+  componentNamePathPrefix: 'src/script',
+})

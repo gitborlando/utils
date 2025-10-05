@@ -1,6 +1,6 @@
 {
   "name": "@gitborlando/utils",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "description": "",
   "type": "module",
   "exports": {
@@ -57,7 +57,8 @@
     "pretty-quick": "^4.2.2",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "just-kebab-case": "^4.2.0"
   },
   "peerDependencies": {
     "react": ">=16.8.0"
