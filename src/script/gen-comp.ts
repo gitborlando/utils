@@ -14,10 +14,12 @@ export function generateComponent(options: GenerateComponentOptions = {}) {
   options.lessTemplate ||= defaultLessTemplate
   options.kebabCaseName ??= true
 
-  const componentName = pascalCase(process.argv[2])
-  const parentDir = process.argv[3] || process.cwd()
+  const parentDir = process.argv[2] || process.cwd()
+  const inputName = pascalCase(process.argv[3])
+  const prefix = pascalCase(process.argv[4] || '')
+  const componentName = prefix ? `${prefix}${inputName}` : inputName
 
-  const fileName = options.kebabCaseName ? kebabCase(componentName) : componentName
+  const fileName = options.kebabCaseName ? kebabCase(inputName) : inputName
   const componentDir = resolve(parentDir, fileName)
 
   // 检查文件夹是否已存在
