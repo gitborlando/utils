@@ -5,7 +5,6 @@ export type DragData = {
   current: IXY
   start: IXY
   shift: IXY
-  delta?: IXY
   marquee: IRect
 }
 
@@ -78,7 +77,7 @@ export class DragUtil {
     return this
   }
 
-  onMove = (callback: (data: DragData) => void) => {
+  onMove = (callback: (data: DragData & { delta: IXY }) => void) => {
     if (this.moveHandler) return this
 
     this.moveHandler = (event) => {
@@ -110,7 +109,7 @@ export class DragUtil {
     return this
   }
 
-  onDestroy = (callback?: (data: DragData) => void) => {
+  onDestroy = (callback?: (data: DragData & { moved: boolean }) => void) => {
     if (this.endHandler) return this
 
     this.endHandler = () => {
@@ -122,6 +121,7 @@ export class DragUtil {
         start: this.start,
         shift: this.shift,
         marquee: this.marquee,
+        moved: this.shift.x !== 0 || this.shift.y !== 0,
       })
 
       this.destroy()
@@ -132,7 +132,7 @@ export class DragUtil {
     return this
   }
 
-  onSlide = (callback: (data: DragData) => void) => {
+  onSlide = (callback: (data: DragData & { delta: IXY }) => void) => {
     this.onStart().onMove(callback).onDestroy()
     return this
   }

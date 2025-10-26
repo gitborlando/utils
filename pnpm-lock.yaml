@@ -7,9 +7,9 @@ settings:
 importers:
   .:
     dependencies:
-      just-kebab-case:
-        specifier: ^4.2.0
-        version: 4.2.0
+      '@gitborlando/signal':
+        specifier: ^1.0.1
+        version: 1.0.1
       react:
         specifier: '>=16.8.0'
         version: 19.1.0
@@ -35,6 +35,9 @@ importers:
       jsdom:
         specifier: ^26.1.0
         version: 26.1.0
+      just-kebab-case:
+        specifier: ^4.2.0
+        version: 4.2.0
       pretty-quick:
         specifier: ^4.2.2
         version: 4.2.2(prettier@3.6.2)
@@ -336,6 +339,12 @@ packages:
     resolution:
       {
         integrity: sha512-JbLVqJfmt47BRMjno8Blk+g5ehOdhW2GxQO84eU5+XHlj3LL2pZWTV7WWukfJsEcs6/LInFpJPVPZvRscblZ2w==,
+      }
+
+  '@gitborlando/signal@1.0.1':
+    resolution:
+      {
+        integrity: sha512-EdKCsH5H5PF/TRUJYd7Vpp6KEg2msxS2AVxtEiQ+8VrXL33l4xYcGyyUFT1tz0mSrZYnlHkzNg0f1ekCxGaUug==,
       }
 
   '@isaacs/cliui@8.0.2':
@@ -1871,6 +1880,8 @@ snapshots:
     optional: true
 
   '@gitborlando/geo@1.0.1': {}
+
+  '@gitborlando/signal@1.0.1': {}
 
   '@isaacs/cliui@8.0.2':
     dependencies:

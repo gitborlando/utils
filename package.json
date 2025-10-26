@@ -1,6 +1,6 @@
 {
   "name": "@gitborlando/utils",
-  "version": "4.5.0",
+  "version": "4.7.0",
   "description": "",
   "type": "module",
   "exports": {
@@ -54,11 +54,11 @@
     "camelcase": "^8.0.0",
     "husky": "^9.1.7",
     "jsdom": "^26.1.0",
+    "just-kebab-case": "^4.2.0",
     "pretty-quick": "^4.2.2",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3",
-    "vitest": "^3.2.4",
-    "just-kebab-case": "^4.2.0"
+    "vitest": "^3.2.4"
   },
   "peerDependencies": {
     "react": ">=16.8.0"
@@ -137,5 +137,8 @@
     "import",
     "export",
     "gitborlando"
-  ]
+  ],
+  "dependencies": {
+    "@gitborlando/signal": "^1.0.1"
+  }
 }
