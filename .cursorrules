@@ -1,0 +1,4 @@
+# Commit Message 规范
+- 所有 AI 生成的 commit message 必须使用中文
+- Commit message 格式：简洁明了地描述改动内容
+- 使用规范的中文标点符号

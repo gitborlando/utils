@@ -1,6 +1,6 @@
 {
   "name": "@gitborlando/utils",
-  "version": "4.7.0",
+  "version": "4.8.0",
   "description": "",
   "type": "module",
   "exports": {
@@ -31,7 +31,7 @@
     "dev": "tsup --watch",
     "build": "tsup",
     "release": "pnpm build && pnpm publish",
-    "clean": "rm -rf dist node_modules pnpm-lock.yaml",
+    "re-i": "rm -rf node_modules pnpm-lock.yaml && pnpm i",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run"
@@ -47,7 +47,7 @@
     "registry": "https://registry.npmjs.org"
   },
   "devDependencies": {
-    "@gitborlando/geo": "^1.0.1",
+    "@gitborlando/geo": "^4.1.1",
     "@types/node": "^24.0.14",
     "@types/react": "^19.1.8",
     "@vitest/ui": "^3.2.4",

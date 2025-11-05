@@ -1,4 +1,5 @@
-import { IRect, IXY, xy_, xy_minus, xy_plus } from '@gitborlando/geo'
+import { IRect, IXY, XY } from '@gitborlando/geo'
+import { iife } from 'src/common'
 import { noopFunc } from 'src/types'
 
 export type DragData = {
@@ -8,99 +9,93 @@ export type DragData = {
   marquee: IRect
 }
 
-export class DragUtil {
+export class DragHelper {
   canMove = false
   started = false
-  private current = { x: 0, y: 0 }
-  private start = { x: 0, y: 0 }
-  private shift = { x: 0, y: 0 }
+  private current = XY.of(0, 0)
+  private start = XY.of(0, 0)
+  private shift = XY.of(0, 0)
   private marquee = { x: 0, y: 0, width: 0, height: 0 }
-  private downHandler?: (event: MouseEvent) => any
-  private startHandler?: (event: MouseEvent) => any
-  private moveHandler?: (event: MouseEvent) => any
-  private endHandler?: (event: MouseEvent) => any
+  private startHandler?: (e: MouseEvent) => any
+  private moveHandler?: (e: MouseEvent) => any
+  private endHandler?: (e: MouseEvent) => any
   private isInfinity = false
+  private needThrottle = false
+
+  constructor(options?: { throttle?: boolean }) {
+    this.needThrottle = options?.throttle ?? true
+  }
 
   needInfinity = () => {
     this.isInfinity = true
     return this
   }
 
-  onDown = (callback?: (data: DragData) => void) => {
-    if (this.downHandler) return this
+  onStart = (callback?: (data: DragData) => void) => {
+    if (this.startHandler) return this
 
-    this.downHandler = ({ clientX, clientY }) => {
+    this.startHandler = (e) => {
       if (this.isInfinity) {
         document.body.requestPointerLock()
       }
 
       this.canMove = true
-      this.current = { x: clientX, y: clientY }
-      this.start = { x: clientX, y: clientY }
+      this.started = true
+      this.current = XY.client(e)
+      this.start = XY.client(e)
       this.marquee = this.calculateMarquee()
+      this.last = this.current
 
       callback?.({
-        current: this.current,
-        start: this.start,
-        shift: this.shift,
+        current: this.current.plain(),
+        start: this.start.plain(),
+        shift: this.shift.plain(),
         marquee: this.marquee,
       })
     }
 
-    window.addEventListener('mousedown', this.downHandler)
+    window.addEventListener('mousedown', this.startHandler)
 
     return this
   }
 
-  onStart = (callback?: (data: DragData) => void) => {
-    if (this.startHandler) return this
-
-    this.startHandler = ({ clientX, clientY }) => {
-      this.current = { x: clientX, y: clientY }
-      this.start = { x: clientX, y: clientY }
-      this.marquee = this.calculateMarquee()
-      callback?.({
-        current: this.current,
-        start: this.start,
-        shift: this.shift,
-        marquee: this.marquee,
-      })
-    }
-
-    if (!this.downHandler) {
-      window.addEventListener('mousedown', () => {
-        this.canMove = true
-        if (this.isInfinity) document.body.requestPointerLock()
-      })
-    }
-
-    return this
-  }
+  private movePending = false
+  private last = XY.of(0, 0)
 
   onMove = (callback: (data: DragData & { delta: IXY }) => void) => {
     if (this.moveHandler) return this
 
-    this.moveHandler = (event) => {
-      if (!this.canMove) return
-      this.canMove = true
+    this.moveHandler = (e) => {
+      if (this.movePending) return
+      this.movePending = true
 
-      if (!this.started) {
-        this.startHandler?.(event)
-        this.started = true
-      }
+      const throttleFunc = this.needThrottle ? requestAnimationFrame : iife
 
-      const { movementX, movementY } = event
-      const delta = xy_(movementX, movementY)
-      this.current = xy_plus(this.current, delta)
-      this.shift = xy_minus(this.current, this.start)
-      this.marquee = this.calculateMarquee()
+      throttleFunc(() => {
+        this.movePending = false
 
-      callback({
-        current: this.current,
-        start: this.start,
-        shift: this.shift,
-        delta,
-        marquee: this.marquee,
+        if (!this.canMove) return
+        this.canMove = true
+
+        if (!this.started) {
+          this.startHandler?.(e)
+          this.started = true
+        }
+
+        this.current = XY.client(e)
+        this.shift = this.current.minus(this.start)
+        this.marquee = this.calculateMarquee()
+
+        const delta = this.current.minus(this.last)
+        this.last = this.current
+
+        callback({
+          current: this.current.plain(),
+          start: this.start.plain(),
+          shift: this.shift.plain(),
+          delta: delta.plain(),
+          marquee: this.marquee,
+        })
       })
     }
 
@@ -116,10 +111,11 @@ export class DragUtil {
       if (!this.canMove) return
 
       this.marquee = this.calculateMarquee()
+
       callback?.({
-        current: this.current,
-        start: this.start,
-        shift: this.shift,
+        current: this.current.plain(),
+        start: this.start.plain(),
+        shift: this.shift.plain(),
         marquee: this.marquee,
         moved: this.shift.x !== 0 || this.shift.y !== 0,
       })
@@ -138,11 +134,9 @@ export class DragUtil {
   }
 
   private destroy = () => {
-    window.removeEventListener('mousedown', this.downHandler || noopFunc)
     window.removeEventListener('mousedown', this.startHandler || noopFunc)
     window.removeEventListener('mousemove', this.moveHandler || noopFunc)
     window.removeEventListener('mouseup', this.endHandler || noopFunc)
-    this.downHandler = undefined
     this.startHandler = undefined
     this.moveHandler = undefined
     this.endHandler = undefined
@@ -182,10 +176,12 @@ export class DragUtil {
   private setDataToDefault = () => {
     this.started = false
     this.canMove = false
+    this.movePending = false
     this.isInfinity = false
-    this.current = { x: 0, y: 0 }
-    this.start = { x: 0, y: 0 }
-    this.shift = { x: 0, y: 0 }
+    this.current = XY.of(0, 0)
+    this.start = XY.of(0, 0)
+    this.shift = XY.of(0, 0)
+    this.last = XY.of(0, 0)
     this.marquee = { x: 0, y: 0, width: 0, height: 0 }
   }
 }

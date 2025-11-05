@@ -1,7 +1,7 @@
 import { iife } from 'src/common'
 
-export const isLeftMouse = (e: MouseEvent) => e.button === 0
-export const isRightMouse = (e: MouseEvent) => e.button === 2
+export const isLeftMouse = (e: any) => e.button === 0
+export const isRightMouse = (e: any) => e.button === 2
 
 export type EventListenOptions = {
   capture?: boolean
