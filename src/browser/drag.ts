@@ -15,10 +15,12 @@ export class DragHelper {
   private current = XY.of(0, 0)
   private start = XY.of(0, 0)
   private shift = XY.of(0, 0)
+  private delta = XY.of(0, 0)
   private marquee = { x: 0, y: 0, width: 0, height: 0 }
   private startHandler?: (e: MouseEvent) => any
   private moveHandler?: (e: MouseEvent) => any
   private endHandler?: (e: MouseEvent) => any
+  private movePending = false
   private isInfinity = false
   private needThrottle = false
 
@@ -39,12 +41,9 @@ export class DragHelper {
         document.body.requestPointerLock()
       }
 
-      this.canMove = true
-      this.started = true
       this.current = XY.client(e)
       this.start = XY.client(e)
       this.marquee = this.calculateMarquee()
-      this.last = this.current
 
       callback?.({
         current: this.current.plain(),
@@ -52,6 +51,9 @@ export class DragHelper {
         shift: this.shift.plain(),
         marquee: this.marquee,
       })
+
+      this.canMove = true
+      this.started = true
     }
 
     window.addEventListener('mousedown', this.startHandler)
@@ -59,13 +61,12 @@ export class DragHelper {
     return this
   }
 
-  private movePending = false
-  private last = XY.of(0, 0)
-
   onMove = (callback: (data: DragData & { delta: IXY }) => void) => {
     if (this.moveHandler) return this
 
     this.moveHandler = (e) => {
+      this.delta = this.delta.plus(XY._(e.movementX, e.movementY))
+
       if (this.movePending) return
       this.movePending = true
 
@@ -82,20 +83,19 @@ export class DragHelper {
           this.started = true
         }
 
-        this.current = XY.client(e)
+        this.current = this.current.plus(this.delta)
         this.shift = this.current.minus(this.start)
         this.marquee = this.calculateMarquee()
-
-        const delta = this.current.minus(this.last)
-        this.last = this.current
 
         callback({
           current: this.current.plain(),
           start: this.start.plain(),
           shift: this.shift.plain(),
-          delta: delta.plain(),
+          delta: this.delta.plain(),
           marquee: this.marquee,
         })
+
+        this.delta = XY.of(0, 0)
       })
     }
 
@@ -178,10 +178,11 @@ export class DragHelper {
     this.canMove = false
     this.movePending = false
     this.isInfinity = false
+    this.needThrottle = false
     this.current = XY.of(0, 0)
     this.start = XY.of(0, 0)
     this.shift = XY.of(0, 0)
-    this.last = XY.of(0, 0)
+    this.delta = XY.of(0, 0)
     this.marquee = { x: 0, y: 0, width: 0, height: 0 }
   }
 }
