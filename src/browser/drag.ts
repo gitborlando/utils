@@ -2,6 +2,11 @@ import { IRect, IXY, XY } from '@gitborlando/geo'
 import { iife } from 'src/common'
 import { noopFunc } from 'src/types'
 
+type MouseEventLike = {
+  clientX: number
+  clientY: number
+}
+
 export type DragData = {
   current: IXY
   start: IXY
@@ -17,7 +22,7 @@ export class DragHelper {
   private shift = XY.of(0, 0)
   private delta = XY.of(0, 0)
   private marquee = { x: 0, y: 0, width: 0, height: 0 }
-  private startHandler?: (e: MouseEvent) => any
+  private startHandler?: (e: MouseEventLike) => any
   private moveHandler?: (e: MouseEvent) => any
   private endHandler?: (e: MouseEvent) => any
   private movePending = false
@@ -33,10 +38,14 @@ export class DragHelper {
     return this
   }
 
-  onStart = (callback?: (data: DragData) => void) => {
+  onStart = (eventOrCallback?: MouseEventLike | ((data: DragData) => void)) => {
     if (this.startHandler) return this
 
-    this.startHandler = (e) => {
+    const isCallback = typeof eventOrCallback === 'function'
+    const event = isCallback ? undefined : eventOrCallback
+    const callback = isCallback ? eventOrCallback : undefined
+
+    this.startHandler = (e: MouseEventLike) => {
       if (this.isInfinity) {
         document.body.requestPointerLock()
       }
@@ -56,7 +65,11 @@ export class DragHelper {
       this.started = true
     }
 
-    window.addEventListener('mousedown', this.startHandler)
+    if (event) {
+      this.startHandler(event)
+    } else {
+      window.addEventListener('mousedown', this.startHandler)
+    }
 
     return this
   }
@@ -128,8 +141,11 @@ export class DragHelper {
     return this
   }
 
-  onSlide = (callback: (data: DragData & { delta: IXY }) => void) => {
-    this.onStart().onMove(callback).onDestroy()
+  onSlide = (
+    callback: (data: DragData & { delta: IXY }) => void,
+    e?: MouseEventLike,
+  ) => {
+    this.onStart(e).onMove(callback).onDestroy()
     return this
   }
 
