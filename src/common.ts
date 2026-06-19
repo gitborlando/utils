@@ -93,7 +93,7 @@ export function safeTimeout(func: () => any, delay = 0) {
 
 export function miniId(
   size = 5,
-  alphabet = '0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ_abcdefghijklmnpqrstuvwxyz',
+  alphabet = /** @cSpell:disable */ '0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ_abcdefghijklmnpqrstuvwxyz',
 ) {
   let id = ''
   let i = size | 0
