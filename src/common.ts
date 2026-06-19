@@ -103,3 +103,11 @@ export function miniId(
   }
   return id
 }
+
+export function optionalSet<T extends AnyObject>(
+  obj: T | undefined | null,
+  key: keyof T,
+  value: T[keyof T],
+) {
+  if (obj) obj[key] = value
+}
