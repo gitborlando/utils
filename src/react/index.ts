@@ -1,4 +1,6 @@
-import { createElement, ReactNode, Suspense, useRef } from 'react'
+import { EffectCallback, useEffect, useRef } from 'react'
+
+export * from './suspense'
 
 type TagToHTMLElement = {
   div: HTMLDivElement
@@ -34,6 +36,10 @@ export function useHTMLElement<T extends keyof TagToHTMLElement>(tag: T) {
   return useRef<NonNullable<TagToHTMLElement[T]>>(null)
 }
 
-export function withSuspense(node: ReactNode, fallback?: ReactNode) {
-  return createElement(Suspense, { fallback }, node)
+export function useMount(effect: EffectCallback) {
+  useEffect(effect, [])
+}
+
+export function useClean(cleanup: () => void) {
+  useEffect(() => cleanup, [cleanup])
 }

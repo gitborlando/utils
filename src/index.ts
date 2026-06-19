@@ -1,5 +1,4 @@
 export * from './array'
-export * from './cache'
 export * from './common'
-export * from './is'
+export * from './get-set'
 export * from './types'

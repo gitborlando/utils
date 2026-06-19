@@ -96,7 +96,7 @@ describe('browser event utilities', () => {
       expect(customTarget.addEventListener).toHaveBeenCalledWith(
         'click',
         handler,
-        options,
+        {},
       )
     })
 
@@ -123,8 +123,22 @@ describe('browser event utilities', () => {
       expect(customTarget.removeEventListener).toHaveBeenCalledWith(
         'click',
         handler,
-        options,
+        {},
       )
+    })
+
+    it('should pass only native listener options to custom target', () => {
+      const customTarget = {
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      }
+      const handler = vi.fn()
+
+      listen('click', { capture: true, target: customTarget }, handler)
+
+      expect(customTarget.addEventListener).toHaveBeenCalledWith('click', handler, {
+        capture: true,
+      })
     })
 
     it('should handle keyboard events', () => {

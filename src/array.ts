@@ -11,16 +11,24 @@ export function lastOne<T extends any = any>(input: T[] | Set<T>) {
   return arr[arr.length - 1]
 }
 
+export function deleteFromArray<T>(
+  target: T[],
+  filter: string | ((value: T) => boolean),
+) {
+  const index =
+    typeof filter === 'function'
+      ? target.findIndex(filter)
+      : target.findIndex((i) => i === filter)
+  if (index >= 0) target.splice(index, 1)
+}
+
 export function flushFuncs<T extends NoopFunc>(input: T[] | Set<T>) {
   input.forEach((callback) => callback())
   Array.isArray(input) ? (input.length = 0) : input.clear()
 }
 
-export function stableIndex<T extends any = any>(arr: T[], index?: number) {
-  if (index === undefined) return arr.length
-  if (index < 0) return 0
-  if (index > arr.length) return arr.length
-  return index
+export function clampIndex<T extends any = any>(arr: T[], index?: number) {
+  return Math.max(0, Math.min(arr.length, index ?? arr.length))
 }
 
 export function loopFor<T>(
@@ -34,19 +42,4 @@ export function loopFor<T>(
     if (res === 'break') break
     if (res === 'continue') continue
   }
-}
-
-export function reverseFor<T>(
-  items: T[],
-  callback: (item: T, index: number) => any,
-) {
-  for (let i = items.length - 1; i >= 0; i--) callback(items[i], i)
-}
-
-export function reverse<T extends any>(arr: T[]) {
-  return arr.slice().reverse()
-}
-
-export function range(count: number) {
-  return new Array(count).fill(0).map((_, i) => i)
 }

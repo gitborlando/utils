@@ -1,6 +1,6 @@
 {
   "name": "@gitborlando/utils",
-  "version": "4.9.1",
+  "version": "5.0.0",
   "description": "",
   "type": "module",
   "exports": {
@@ -27,7 +27,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "prepare": "husky",
+    "prepare": "simple-git-hooks",
     "dev": "tsup --watch",
     "build": "tsup",
     "release": "pnpm build && pnpm publish",
@@ -47,15 +47,12 @@
     "registry": "https://registry.npmjs.org"
   },
   "devDependencies": {
-    "@gitborlando/geo": "^4.1.1",
     "@types/node": "^24.0.14",
     "@types/react": "^19.1.8",
     "@vitest/ui": "^3.2.4",
-    "camelcase": "^8.0.0",
-    "husky": "^9.1.7",
     "jsdom": "^26.1.0",
-    "just-kebab-case": "^4.2.0",
     "pretty-quick": "^4.2.2",
+    "simple-git-hooks": "^2.13.1",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4"
@@ -72,6 +69,9 @@
     "singleQuote": true,
     "jsxSingleQuote": true
   },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm exec pretty-quick --staged"
+  },
   "keywords": [
     "utils",
     "utilities",
@@ -81,13 +81,8 @@
     "helpers",
     "library",
     "array",
-    "cache",
-    "storage",
     "event",
-    "math",
     "react",
-    "drag",
-    "wheel",
     "common",
     "functional",
     "frontend",
@@ -108,25 +103,14 @@
     "manipulation",
     "data-structures",
     "algorithms",
-    "caching",
-    "local-storage",
-    "session-storage",
     "event-handling",
     "mouse-events",
-    "drag-drop",
-    "scroll",
-    "geometry",
-    "coordinates",
-    "xy",
-    "mathematical",
-    "calculations",
     "dom",
     "browser-api",
     "cross-platform",
     "node",
     "bundler",
     "vite",
-    "webpack",
     "rollup",
     "build-tools",
     "npm",
@@ -139,6 +123,6 @@
     "gitborlando"
   ],
   "dependencies": {
-    "@gitborlando/signal": "^1.0.1"
+    "camelcase": "^8.0.0"
   }
 }
