@@ -74,7 +74,7 @@
     "jsxSingleQuote": true
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm exec pretty-quick --staged"
+    "pre-commit": "node scripts/check-version-changed.mjs && pnpm exec pretty-quick --staged"
   },
   "keywords": [
     "utils",
