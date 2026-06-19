@@ -40,6 +40,10 @@
     "dist",
     "README.md"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gitborlando/utils"
+  },
   "author": "",
   "license": "ISC",
   "publishConfig": {
