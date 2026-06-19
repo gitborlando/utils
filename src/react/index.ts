@@ -1,4 +1,5 @@
-import { EffectCallback, useEffect, useRef } from 'react'
+import type { DependencyList, EffectCallback } from 'react'
+import { useEffect, useRef } from 'react'
 
 export * from './suspense'
 
@@ -40,6 +41,6 @@ export function useMount(effect: EffectCallback) {
   useEffect(effect, [])
 }
 
-export function useClean(cleanup: () => void) {
-  useEffect(() => cleanup, [cleanup])
+export function useClean(cleanup: () => void, deps: DependencyList = []) {
+  useEffect(() => cleanup, deps)
 }

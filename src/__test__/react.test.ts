@@ -43,12 +43,22 @@ describe('React utilities', () => {
   })
 
   describe('useClean', () => {
-    it('should register cleanup effect with cleanup dependency', () => {
+    it('should register cleanup effect with empty dependencies by default', () => {
       const cleanup = vi.fn()
 
       useClean(cleanup)
 
-      expect(mockUseEffect).toHaveBeenCalledWith(expect.any(Function), [cleanup])
+      expect(mockUseEffect).toHaveBeenCalledWith(expect.any(Function), [])
+      expect(mockUseEffect.mock.calls[0][0]()).toBe(cleanup)
+    })
+
+    it('should register cleanup effect with provided dependencies', () => {
+      const cleanup = vi.fn()
+      const deps = ['id']
+
+      useClean(cleanup, deps)
+
+      expect(mockUseEffect).toHaveBeenCalledWith(expect.any(Function), deps)
       expect(mockUseEffect.mock.calls[0][0]()).toBe(cleanup)
     })
   })
