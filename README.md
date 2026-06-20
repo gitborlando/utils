@@ -172,17 +172,6 @@ const dirname = getDirname()
 ensureDir('./dist/assets')
 ```
 
-## Script 入口
-
-```typescript
-import { generateAssets } from '@gitborlando/utils/script'
-
-generateAssets({
-  sourceDir: './src/assets',
-  outputFile: './src/assets/index.ts',
-})
-```
-
 ## 发布
 
 ```bash

@@ -5,7 +5,6 @@ export default defineConfig({
     'src/index.ts',
     'src/browser/index.ts',
     'src/node/index.ts',
-    'src/script/index.ts',
     'src/react/index.ts',
   ],
   outDir: 'dist',

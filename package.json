@@ -1,6 +1,6 @@
 {
   "name": "@gitborlando/utils",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "description": "",
   "type": "module",
   "exports": {
@@ -15,10 +15,6 @@
     "./node": {
       "import": "./dist/node/index.js",
       "types": "./dist/node/index.d.ts"
-    },
-    "./script": {
-      "import": "./dist/script/index.js",
-      "types": "./dist/script/index.d.ts"
     },
     "./react": {
       "import": "./dist/react/index.js",
