@@ -1,61 +1,76 @@
-type CaseKeyOf<T, K extends keyof T> = Exclude<Extract<T[K], PropertyKey>, '_'>
+type ValueCaseKey<V extends PropertyKey> = Exclude<V, '_'>
 
-type SafeDiscriminantKey<T, K extends keyof T> = K &
-  ('_' extends T[K] ? never : unknown)
+type SafeMatchValue<V extends PropertyKey> = V & ('_' extends V ? never : unknown)
 
-type MatchCaseShape<T, K extends keyof T> = {
-  [P in CaseKeyOf<T, K>]: (item: Extract<T, Record<K, P>>) => unknown
+type ValueMatchCases<V extends PropertyKey> = {
+  [P in ValueCaseKey<V>]: () => unknown
 }
 
-type PartialMatchCaseShape<T, K extends keyof T> = Partial<MatchCaseShape<T, K>> & {
-  _: (item: never) => unknown
+type PartialValueMatchCases<V extends PropertyKey> = Partial<ValueMatchCases<V>> & {
+  _: () => unknown
 }
 
-type HandledCaseKeys<T, K extends keyof T, R> = Extract<
-  Exclude<keyof R, '_'>,
-  CaseKeyOf<T, K>
+type NoExtraKeys<C, Allowed extends PropertyKey> = Record<
+  Exclude<keyof C, Allowed>,
+  never
 >
 
-type RemainingCases<T, K extends keyof T, R> = Exclude<
-  T,
-  Record<K, HandledCaseKeys<T, K, R>>
+type FunctionResult<F> = F extends (...args: never[]) => infer R ? R : never
+
+type HandledValueKeys<V extends PropertyKey, C> = Extract<
+  Exclude<keyof C, '_'>,
+  ValueCaseKey<V>
 >
 
-type CapturedCases<T, K extends keyof T, R> = {
-  [P in keyof R]: P extends '_'
-    ? (item: RemainingCases<T, K, R>) => R[P]
-    : P extends CaseKeyOf<T, K>
-      ? (item: Extract<T, Record<K, P>>) => R[P]
-      : never
-}
+type RemainingValueKeys<V extends PropertyKey, C> = Exclude<
+  ValueCaseKey<V>,
+  HandledValueKeys<V, C>
+>
 
-type MatchResult<T, K extends keyof T, R> =
-  | R[Exclude<keyof R, '_'>]
-  | ('_' extends keyof R
-      ? [RemainingCases<T, K, R>] extends [never]
+type ValueMatchResult<V extends PropertyKey, C> =
+  | FunctionResult<C[Exclude<keyof C, '_'>]>
+  | ('_' extends keyof C
+      ? [RemainingValueKeys<V, C>] extends [never]
         ? never
-        : R[Extract<keyof R, '_'>]
+        : FunctionResult<C[Extract<keyof C, '_'>]>
       : never)
 
-export function match<T, K extends keyof T, const R>(
-  obj: T,
-  key: SafeDiscriminantKey<T, K>,
-  cases: MatchCaseShape<T, K> & CapturedCases<T, K, R>,
-): MatchResult<T, K, R>
+export function match<V extends PropertyKey, const C extends ValueMatchCases<V>>(
+  value: SafeMatchValue<V>,
+  cases: C & NoExtraKeys<C, ValueCaseKey<V> | '_'>,
+): ValueMatchResult<V, C>
 
-export function match<T, K extends keyof T, const R>(
-  obj: T,
-  key: SafeDiscriminantKey<T, K>,
-  cases: PartialMatchCaseShape<T, K> & CapturedCases<T, K, R>,
-): MatchResult<T, K, R>
+export function match<
+  V extends PropertyKey,
+  const C extends PartialValueMatchCases<V>,
+>(
+  value: SafeMatchValue<V>,
+  cases: C & NoExtraKeys<C, ValueCaseKey<V> | '_'>,
+): ValueMatchResult<V, C>
 
-export function match<T, K extends keyof T>(
-  obj: T,
-  key: SafeDiscriminantKey<T, K>,
-  cases: object,
+export function match(
+  valueOrObject: unknown,
+  keyOrCases: PropertyKey | object,
+  maybeCases?: object,
 ): unknown {
-  const keyValue = obj[key]
+  // match(value, cases)
+  if (arguments.length === 2) {
+    return executeMatch(valueOrObject, keyOrCases as object, false)
+  }
 
+  // match(object, key, cases)
+  const object = valueOrObject as Record<PropertyKey, unknown>
+  const key = keyOrCases as PropertyKey
+
+  return executeMatch(object[key], maybeCases!, true, object)
+}
+
+function executeMatch(
+  keyValue: unknown,
+  cases: object,
+  passItem: boolean,
+  item?: unknown,
+): unknown {
   if (
     keyValue !== '_' &&
     (typeof keyValue === 'string' ||
@@ -66,14 +81,14 @@ export function match<T, K extends keyof T>(
     const handler = Reflect.get(cases, keyValue)
 
     if (typeof handler === 'function') {
-      return (handler as (item: T) => unknown)(obj)
+      return passItem ? handler(item) : handler()
     }
   }
 
   const fallback = Reflect.get(cases, '_')
 
   if (typeof fallback === 'function') {
-    return (fallback as (item: T) => unknown)(obj)
+    return passItem ? fallback(item) : fallback()
   }
 
   throw new Error(`Unhandled key: ${String(keyValue)}`)
