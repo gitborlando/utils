@@ -6,6 +6,9 @@ export function iife<T extends any = any>(callback: () => T): T {
   return callback()
 }
 
+/**
+ * @deprecated
+ */
 export function matchCase<T extends string, R extends any>(
   Case: T,
   obj: Partial<Record<T, R>> & { _default?: R },
